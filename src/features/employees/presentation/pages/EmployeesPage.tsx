@@ -1,7 +1,11 @@
 import { useGetEmployeesQuery } from "../../data/employeesApi";
 import { EmployeesTable } from "../components/EmployeesTable";
 
-export function EmployeesPage() {
+interface Props {
+  onEmployeeClick?: (id: number) => void;
+}
+
+export function EmployeesPage({ onEmployeeClick }: Props) {
   const { data: employees, isLoading, isError } = useGetEmployeesQuery();
 
   if (isLoading) {
@@ -19,7 +23,7 @@ export function EmployeesPage() {
   return (
     <div className="p-8">
       <h2 className="mb-6 text-xl font-semibold text-gray-800">Employees</h2>
-      <EmployeesTable employees={employees ?? []} />
+      <EmployeesTable employees={employees ?? []} onRowClick={onEmployeeClick} />
     </div>
   );
 }

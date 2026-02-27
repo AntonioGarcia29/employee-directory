@@ -1,14 +1,14 @@
 {
   "employees": [
     {
-      "id": 1,
       "firstName": "Ana",
-      "lastName": "García",
+      "lastName": "García Galván",
       "email": "ana.garcia@apsys.mx",
       "position": "Frontend Developer",
       "department": "Engineering",
       "startDate": "2022-03-15",
-      "status": "active"
+      "status": "active",
+      "id": 1
     },
     {
       "id": 2,
@@ -102,11 +102,29 @@
     }
   ],
   "departments": [
-    { "id": 1, "name": "Engineering" },
-    { "id": 2, "name": "Design" },
-    { "id": 3, "name": "Operations" },
-    { "id": 4, "name": "Infrastructure" },
-    { "id": 5, "name": "Human Resources" },
-    { "id": 6, "name": "Analytics" }
+    {
+      "id": 1,
+      "name": "Engineering"
+    },
+    {
+      "id": 2,
+      "name": "Design"
+    },
+    {
+      "id": 3,
+      "name": "Operations"
+    },
+    {
+      "id": 4,
+      "name": "Infrastructure"
+    },
+    {
+      "id": 5,
+      "name": "Human Resources"
+    },
+    {
+      "id": 6,
+      "name": "Analytics"
+    }
   ]
 }

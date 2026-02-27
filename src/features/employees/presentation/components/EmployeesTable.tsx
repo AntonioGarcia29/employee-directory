@@ -45,9 +45,10 @@ const columns = [
 
 interface Props {
   employees: Employee[];
+  onRowClick?: (id: number) => void;
 }
 
-export function EmployeesTable({ employees }: Props) {
+export function EmployeesTable({ employees, onRowClick }: Props) {
   const table = useReactTable({
     data: employees,
     columns,
@@ -76,7 +77,11 @@ export function EmployeesTable({ employees }: Props) {
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-50">
+            <tr
+              key={row.id}
+              onClick={() => onRowClick?.(row.original.id)}
+              className={`hover:bg-gray-50 ${onRowClick ? "cursor-pointer" : ""}`}
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="px-6 py-4 text-sm text-gray-700">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
