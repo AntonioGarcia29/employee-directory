@@ -55,6 +55,12 @@ Strict mode is enabled with `noUnusedLocals`, `noUnusedParameters`, and `erasabl
 
 - Use comments sparingly. Only comment complex or non-obvious logic.
 
+## Documentation
+
+- Always use Context7 to check up-to-date docs before implementing or modifying
+  code that uses any third-party library — especially:
+  RTK Query, React Hook Form, Zod, TanStack Table.
+
 ## apsys Architecture Rules
 
 - All features go inside `src/features/<feature-name>/`

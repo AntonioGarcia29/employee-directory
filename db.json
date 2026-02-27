@@ -99,6 +99,16 @@
       "department": "Analytics",
       "startDate": "2022-07-18",
       "status": "active"
+    },
+    {
+      "firstName": "Antonio Iván",
+      "lastName": "García Galván",
+      "email": "antoniomasn2@gmail.com",
+      "position": "Frontend Developer",
+      "department": "Engineering",
+      "startDate": "2003-01-29",
+      "status": "active",
+      "id": 11
     }
   ],
   "departments": [
