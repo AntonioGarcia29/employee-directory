@@ -30,7 +30,7 @@ export function EmployeesPage({ onEmployeeClick }: Props) {
         <h2 className="text-xl font-semibold text-gray-800">Employees</h2>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         >
           + Add Employee
         </button>
