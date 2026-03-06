@@ -24,6 +24,7 @@ export function EmployeeDetailTable({ employee }: Props) {
     { label: "Email", value: employee.email },
     { label: "Position", value: employee.position },
     { label: "Department", value: employee.department },
+    { label: "Phone", value: employee.phone ?? "—" },
     {
       label: "Start Date",
       value: new Date(employee.startDate).toLocaleDateString(),

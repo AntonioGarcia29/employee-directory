@@ -12,6 +12,7 @@ const schema = z.object({
   department: z.string().min(1, "Department is required"),
   startDate: z.string().min(1, "Start date is required"),
   status: z.enum(["active", "inactive"]),
+  phone: z.string().optional(),
 });
 
 type EmployeeCreateFormValues = z.infer<typeof schema>;
@@ -131,6 +132,13 @@ export function EmployeeCreateForm({ onSuccess }: Props) {
         {errors.startDate && (
           <p className="mt-1 text-xs text-red-500">{errors.startDate.message}</p>
         )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Phone
+        </label>
+        <input {...register("phone")} type="tel" className={INPUT_CLASS} />
       </div>
 
       <div className="flex justify-end pt-2">

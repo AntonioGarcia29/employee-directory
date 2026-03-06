@@ -7,6 +7,7 @@ export interface Employee {
   department: string;
   startDate: string;
   status: "active" | "inactive";
+  phone?: string;
 }
 
 export interface Department {
