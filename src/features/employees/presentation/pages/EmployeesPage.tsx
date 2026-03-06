@@ -10,7 +10,7 @@ interface Props {
 
 export function EmployeesPage({ onEmployeeClick }: Props) {
   const { data: employees, isLoading, isError } = useGetEmployeesQuery();
-  const { data: departments } = useGetDepartmentsQuery();
+  const { data: departments, isError: isDepartmentsError } = useGetDepartmentsQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,11 +58,15 @@ export function EmployeesPage({ onEmployeeClick }: Props) {
             className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option value="All">All Departments</option>
-            {departments?.map((dept) => (
-              <option key={dept.id} value={dept.name}>
-                {dept.name}
-              </option>
-            ))}
+            {isDepartmentsError ? (
+              <option disabled>Failed to load departments</option>
+            ) : (
+              departments?.map((dept) => (
+                <option key={dept.id} value={dept.name}>
+                  {dept.name}
+                </option>
+              ))
+            )}
           </select>
           <button
             onClick={() => setIsModalOpen(true)}
