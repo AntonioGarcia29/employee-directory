@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "../../../store/baseApi";
 import type { Employee, Department } from "../domain/employee.types";
 
-export const employeesApi = createApi({
-  reducerPath: "employeesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
-  tagTypes: ["Employees"],
+export const employeesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees",
@@ -18,6 +15,7 @@ export const employeesApi = createApi({
     }),
     getDepartments: builder.query<Department[], void>({
       query: () => "/departments",
+      providesTags: ["Departments"],
     }),
     addEmployee: builder.mutation<Employee, Omit<Employee, "id">>({
       query: (body) => ({

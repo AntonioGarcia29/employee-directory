@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { employeesApi } from "../features/employees/data/employeesApi";
+import { baseApi } from "./baseApi";
 import { employeeDetailApi } from "../features/employee-detail/data/employeeDetailApi";
 
 export const store = configureStore({
   reducer: {
-    [employeesApi.reducerPath]: employeesApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
     [employeeDetailApi.reducerPath]: employeeDetailApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(employeesApi.middleware)
+      .concat(baseApi.middleware)
       .concat(employeeDetailApi.middleware),
 });
 

@@ -10,9 +10,10 @@ interface Props {
 
 export function EmployeesPage({ onEmployeeClick }: Props) {
   const { data: employees, isLoading, isError } = useGetEmployeesQuery();
-  const { data: departments } = useGetDepartmentsQuery();
+  const { data: departments, isError: isDepartmentsError } = useGetDepartmentsQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   if (isLoading) {
     return <p className="p-8 text-gray-500">Loading employees...</p>;
@@ -26,27 +27,46 @@ export function EmployeesPage({ onEmployeeClick }: Props) {
     );
   }
 
-  const filteredEmployees =
-    selectedDepartment === "All"
-      ? (employees ?? [])
-      : (employees ?? []).filter((e) => e.department === selectedDepartment);
+  const filteredEmployees = (employees ?? [])
+    .filter((e) =>
+      selectedDepartment === "All" ? true : e.department === selectedDepartment,
+    )
+    .filter((e) => {
+      const q = searchQuery.trim().toLowerCase();
+      if (!q) return true;
+      return (
+        e.firstName.toLowerCase().includes(q) ||
+        e.lastName.toLowerCase().includes(q)
+      );
+    });
 
   return (
     <div className="p-8">
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-800">Employees</h2>
         <div className="flex items-center gap-3">
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name..."
+            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
           <select
             value={selectedDepartment}
             onChange={(e) => setSelectedDepartment(e.target.value)}
             className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option value="All">All Departments</option>
-            {departments?.map((dept) => (
-              <option key={dept.id} value={dept.name}>
-                {dept.name}
-              </option>
-            ))}
+            {isDepartmentsError ? (
+              <option disabled>Failed to load departments</option>
+            ) : (
+              departments?.map((dept) => (
+                <option key={dept.id} value={dept.name}>
+                  {dept.name}
+                </option>
+              ))
+            )}
           </select>
           <button
             onClick={() => setIsModalOpen(true)}

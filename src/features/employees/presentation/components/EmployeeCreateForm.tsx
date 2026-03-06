@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAddEmployeeMutation } from "../../data/employeesApi";
-import { useGetDepartmentsQuery } from "../../data/employeesApi";
+import { useAddEmployeeMutation, useGetDepartmentsQuery } from "../../data/employeesApi";
 
 const schema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -33,6 +32,7 @@ export function EmployeeCreateForm({ onSuccess }: Props) {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<EmployeeCreateFormValues>({
     resolver: zodResolver(schema),
@@ -40,9 +40,13 @@ export function EmployeeCreateForm({ onSuccess }: Props) {
   });
 
   const onSubmit = async (values: EmployeeCreateFormValues) => {
-    await addEmployee(values).unwrap();
-    reset();
-    onSuccess?.();
+    try {
+      await addEmployee(values).unwrap();
+      reset();
+      onSuccess?.();
+    } catch {
+      setError("root", { message: "Failed to create employee. Please try again." });
+    }
   };
 
   return (
@@ -140,6 +144,10 @@ export function EmployeeCreateForm({ onSuccess }: Props) {
         </label>
         <input {...register("phone")} type="tel" className={INPUT_CLASS} />
       </div>
+
+      {errors.root && (
+        <p className="text-sm text-red-500">{errors.root.message}</p>
+      )}
 
       <div className="flex justify-end pt-2">
         <button
